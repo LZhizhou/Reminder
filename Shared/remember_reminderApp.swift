@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct remember_reminderApp: App {
+    @ObservedObject private var data = ReminderData()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView{
+                ReminderView(reminders:$data.reminders){
+                    data.save()
+                }
+            }.onAppear {
+                data.load()
+            }
         }
     }
 }
